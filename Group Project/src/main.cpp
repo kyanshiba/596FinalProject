@@ -65,6 +65,7 @@ BLYNK_WRITE(V2)
 void loop()
 {
   // Sound Activated Light Code
+  // turns on or off the light based off a loud sound, can be triggered once every 5 seconds
   int SoundLevel = analogRead(SoundSensorPin);
   if (SoundLevel > 1500 && millis() - lightTime > 5000)
   {
@@ -75,14 +76,16 @@ void loop()
     lightTime = millis();
   }
   // Humidity and Temperature Code
+  // Sends blynk the temp and humdity every 10 minutes to be graphed on the cloud.
   Blynk.run();
   int status = DHT.read();
-  if (millis() - temperatureTime > 10000)
+  if (millis() - temperatureTime > 600000)
   {
     Blynk.virtualWrite(V1, DHT.getHumidity());
     Blynk.virtualWrite(V0, DHT.getTemperature() * 1.8 + 32);
     temperatureTime = millis();
   }
+  // If motion is detected, Will send an alert with a 10 second cooldown, and blynk will send a phone notification and upload it a chart
   long motionDetected = ultrasonic.Ranging(CM);
   if (motionDetected < 3 && millis() - motionTime > 10000)
   {
