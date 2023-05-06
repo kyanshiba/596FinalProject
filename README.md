@@ -1,3 +1,3 @@
 # 596FinalProject
 596 Final Project
-596 Project for RyanHeavner and Jonathan Truong
+596 Project for Ryan Heavner and Jonathan Truong
